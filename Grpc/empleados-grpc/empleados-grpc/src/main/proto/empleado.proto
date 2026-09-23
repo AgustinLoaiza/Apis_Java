@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package empleado;
+
+option java_multiple_files = true;
+
+option java_package =
+    "com.usfx.empleados_grpc.grpc";
+
+option java_outer_classname =
+    "EmpleadoProto";
+
+
+message Vacio {
+}
+
+
+message EmpleadoRequest {
+
+  int64 id = 1;
+
+}
+
+
+message EmpleadoInput {
+
+  string nombre = 1;
+
+  string apellido = 2;
+
+  string cargo = 3;
+
+  double salario = 4;
+
+  string email = 5;
+
+}
+
+
+message EmpleadoMessage {
+
+  int64 id = 1;
+
+  string nombre = 2;
+
+  string apellido = 3;
+
+  string cargo = 4;
+
+  double salario = 5;
+
+  string email = 6;
+
+}
+
+
+message ListaEmpleados {
+
+  repeated EmpleadoMessage empleados = 1;
+
+}
+
+
+message ActualizarEmpleadoRequest {
+
+  int64 id = 1;
+
+  EmpleadoInput empleado = 2;
+
+}
+
+
+message EliminarResponse {
+
+  bool eliminado = 1;
+
+  string mensaje = 2;
+
+}
+
+
+service EmpleadoService {
+
+  rpc ListarEmpleados(Vacio)
+      returns (ListaEmpleados);
+
+  rpc ObtenerEmpleado(EmpleadoRequest)
+      returns (EmpleadoMessage);
+
+  rpc CrearEmpleado(EmpleadoInput)
+      returns (EmpleadoMessage);
+
+  rpc ActualizarEmpleado(
+      ActualizarEmpleadoRequest
+      ) returns (EmpleadoMessage);
+
+  rpc EliminarEmpleado(EmpleadoRequest)
+      returns (EliminarResponse);
+
+}

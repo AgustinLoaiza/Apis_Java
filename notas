@@ -1,0 +1,81 @@
+| Servicio | Puerto |
+|---|---:|
+| REST | `8080` |
+| GraphQL | `8081` |
+| gRPC | `9090` |
+
+AL correr el servicio rest ingresar a la ruta:
+http://localhost:8080/swagger-ui.html
+AL correr el servicio Graphql esta es la ruta:
+http://localhost:8081/graphiql
+CRUDS GRAPHQL
+query {
+  empleados {
+    id
+    nombre
+    apellido
+    cargo
+  }
+}
+
+mutation {
+  crearEmpleado(
+    input: {
+      nombre: "Carlos"
+      apellido: "Perez"
+      cargo: "Programador"
+      salario: 6500
+      email: "carlos@empresa.com"
+    }
+  ) {
+    id
+    nombre
+    cargo
+  }
+
+
+mutation {
+    actualizarEmpleado(
+        id: 1
+        input: {
+            nombre: "Carlos"
+            apellido: "Perez"
+            cargo: "Arquitecto de Software"
+            salario: 8500
+            email: "carlos@empresa.com"
+        }
+    ) {
+        id
+        nombre
+        cargo
+        salario
+    }
+}
+
+mutation {
+    eliminarEmpleado(id: 1)
+}
+
+algunos llamados CRUL para GRPC:
+grpcurl \
+  -plaintext \
+  -import-path src/main/proto \
+  -proto empleado.proto \
+  -d '{}' \
+  127.0.0.1:9090 \
+  empleado.EmpleadoService/ListarEmpleados
+  
+  crear:
+  grpcurl \
+  -plaintext \
+  -import-path src/main/proto \
+  -proto empleado.proto \
+  -d '{
+    "nombre": "Maria",
+    "apellido": "Lopez",
+    "cargo": "Backend Developer",
+    "salario": 7000,
+    "email": "maria@empresa.com"
+  }' \
+  127.0.0.1:9090 \
+  empleado.EmpleadoService/CrearEmpleado
