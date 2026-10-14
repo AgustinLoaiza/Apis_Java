@@ -1,0 +1,9 @@
+{
+  "servicio": "empleados",
+  "consumidor": "servicio-reportes",
+  "endpoint": "GET /api/empleados/{id}",
+  "respuesta": {
+    "status": 200,
+    "camposObligatorios": ["nombre", "apellido", "cargo", "salario", "email"]
+  }
+}
